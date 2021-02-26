@@ -1,6 +1,7 @@
 import { isEmpty, isArray } from "lodash";
 import { sanitize } from "../../../utils/miscellaneous";
 import Link from "next/link";
+import getIconComponentBySlug from "../../../utils/icons-map";
 
 export default function Footer({ footer, footerMenus }) {
   console.log("FOOTER", footer, "FOOTER_MENU", footerMenus);
@@ -43,9 +44,29 @@ export default function Footer({ footer, footerMenus }) {
           ) : null}
         </div>
       </div>
-      <div className="text-gray-300 text-center mt-6">
-        {footer.copyrightText ? footer.copyrightText : "CodeCandy 2021"}{" "}
-        <div>{footer.so}</div>
+      <div className="mb-8 mt-8 w-full flex flex-wrap">
+        <div className="text-gray-300 w-full md:w-1/2 lg:w-1/4 text-white">
+          {footer.copyrightText ? footer.copyrightText : "CodeCandy 2021"}{" "}
+        </div>
+        <div className="w-full lg:w-3/4 flex justify-end">
+          {!isEmpty(footer.socialLinks) && isArray(footer.socialLinks) ? (
+            <ul className="flex items-center">
+              {footer.socialLinks.map((socialLink) => {
+                return (
+                  <li
+                    key={socialLink.iconName}
+                    style={{ width: "2rem", color: "#fff" }}
+                    className="ml-4"
+                  >
+                    <a href={socialLink.iconUrl}>
+                      {getIconComponentBySlug(socialLink.iconName)}
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          ) : null}
+        </div>
       </div>
     </footer>
   );
