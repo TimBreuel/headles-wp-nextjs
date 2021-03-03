@@ -3,17 +3,18 @@ import { isEmpty } from "lodash";
 import { GET_PAGE } from "../src/queries/pages/get-page";
 import { useRouter } from "next/router";
 import client from "../src/apollo/client";
+import Layout from "../src/components/layout/index";
 
-const Pages = ({ data }) => {
+const Page = ({ data }) => {
   console.log("DATA PAGES:", data);
   const router = useRouter();
   if (router.isFallback) {
     return <div>Loading...</div>;
   }
-  return <div>{data.page.title}</div>;
+  return <Layout data={data}>{router.query.slug.join("/")}</Layout>;
 };
 
-export default Pages;
+export default Page;
 
 export const getStaticProps = async ({ params }) => {
   const { data } = await client.query({
@@ -22,10 +23,19 @@ export const getStaticProps = async ({ params }) => {
       uri: params.slug.join("/"),
     },
   });
-  console.log("GET STATIC DATA", data);
+  //console.log("GET STATIC DATA", data);
   return {
     props: {
-      data: data,
+      data: {
+        header: data.header || [],
+        wpMenus: {
+          headerMenus: data.headerMenus.edges,
+          footerMenus: data.footerMenus.edges,
+        },
+        footer: data.footer || [],
+        page: data.page ?? {},
+        path: params.slug.join("/"),
+      },
     },
     revalidate: 1,
   };

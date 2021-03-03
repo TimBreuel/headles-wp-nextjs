@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useState } from "react";
 
 export default function Nav({ headerMenus, header }) {
+  console.log("NAV", headerMenus);
   if (isEmpty(headerMenus)) {
     return null;
   }
@@ -96,7 +97,8 @@ export default function Nav({ headerMenus, header }) {
               >
                 {headerMenus ? (
                   <div className="flex space-x-4">
-                    {headerMenus.map((menu) => {
+                    {headerMenus.edges.map((menu) => {
+                      //console.log("LOOP MENU", menu);
                       return (
                         <Link href={menu.node.path} key={menu.node.id}>
                           <a className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
@@ -137,7 +139,7 @@ export default function Nav({ headerMenus, header }) {
         <div className={isMenuVisible ? "block" : "hidden sm:hidden"}>
           {headerMenus ? (
             <div className="px-2 pt-2 pb-3 space-y-1">
-              {headerMenus.map((menu) => {
+              {headerMenus.edges.map((menu) => {
                 return (
                   <Link href={menu.node.path} key={menu.node.id}>
                     <a className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
