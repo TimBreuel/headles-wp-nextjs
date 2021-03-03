@@ -4,11 +4,11 @@ import Link from "next/link";
 import getIconComponentBySlug from "../../../utils/icons-map";
 
 export default function Footer({ footer, footerMenus }) {
-  console.log("FOOTER", footer, "FOOTER_MENU", footerMenus);
+  // console.log("FOOTER", footer, "FOOTER_MENU", footerMenus);
   return (
     <footer className="bg-gray-800 p-6">
-      <div class="flex flex-wrap -mx-2 overflow-hidden">
-        <div class="my-2 px-2 w-1/3 overflow-hidden sm:w-full lg:w-1/3 xl:w-1/3">
+      <div className="flex flex-wrap -mx-2 overflow-hidden">
+        <div className="my-2 px-2 w-1/3 overflow-hidden sm:w-full lg:w-1/3 xl:w-1/3">
           {
             <div
               dangerouslySetInnerHTML={{ __html: sanitize(footer.sidebarOne) }}
@@ -17,7 +17,7 @@ export default function Footer({ footer, footerMenus }) {
           }
         </div>
 
-        <div class="my-2 px-2 w-1/3 overflow-hidden sm:w-full lg:w-1/3 xl:w-1/3">
+        <div className="my-2 px-2 w-1/3 overflow-hidden sm:w-full lg:w-1/3 xl:w-1/3">
           {
             <div
               dangerouslySetInnerHTML={{ __html: sanitize(footer.sidebarTwo) }}
@@ -26,7 +26,7 @@ export default function Footer({ footer, footerMenus }) {
           }
         </div>
 
-        <div class="my-2 px-2 w-1/3 overflow-hidden sm:w-full lg:w-1/3 xl:w-1/3">
+        <div className="my-2 px-2 w-1/3 overflow-hidden sm:w-full lg:w-1/3 xl:w-1/3">
           {!isEmpty(footerMenus) && isArray(footerMenus) ? (
             <ul>
               {footerMenus.map((footerMenu) => {

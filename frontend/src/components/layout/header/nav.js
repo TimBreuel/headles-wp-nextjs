@@ -13,7 +13,7 @@ export default function Nav({ headerMenus, header }) {
     setMenuVisibility(!isMenuVisible);
   };
 
-  console.log("NAV COMP:", headerMenus);
+  //console.log("NAV COMP:", headerMenus);
   return (
     <div>
       <nav className="bg-gray-800">
