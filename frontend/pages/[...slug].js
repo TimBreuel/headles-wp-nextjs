@@ -4,6 +4,10 @@ import { GET_PAGE } from "../src/queries/pages/get-page";
 import { useRouter } from "next/router";
 import client from "../src/apollo/client";
 import Layout from "../src/components/layout/index";
+import {
+  handleRedirectsAndRerturnData,
+  isCustomPageUri,
+} from "../src/utils/slugs";
 
 const Page = ({ data }) => {
   console.log("DATA PAGES:", data);
@@ -17,28 +21,36 @@ const Page = ({ data }) => {
 export default Page;
 
 export const getStaticProps = async ({ params }) => {
-  const { data } = await client.query({
+  const { data, errors } = await client.query({
     query: GET_PAGE,
     variables: {
       uri: params.slug.join("/"),
     },
   });
   //console.log("GET STATIC DATA", data);
-  return {
+  // return {
+  //   props: {
+  //     data: {
+  //       header: data.header || [],
+  //       wpMenus: {
+  //         headerMenus: data.headerMenus.edges,
+  //         footerMenus: data.footerMenus.edges,
+  //       },
+  //       footer: data.footer || [],
+  //       page: data.page ?? {},
+  //       path: params.slug.join("/"),
+  //     },
+  //   },
+  //   revalidate: 1,
+  // };
+  const defaultProps = {
     props: {
-      data: {
-        header: data.header || [],
-        wpMenus: {
-          headerMenus: data.headerMenus.edges,
-          footerMenus: data.footerMenus.edges,
-        },
-        footer: data.footer || [],
-        page: data.page ?? {},
-        path: params.slug.join("/"),
-      },
+      data: data || {},
     },
     revalidate: 1,
   };
+
+  return handleRedirectsAndRerturnData(defaultProps, data, errors, "page");
 };
 
 export const getStaticPaths = async () => {
@@ -50,7 +62,7 @@ export const getStaticPaths = async () => {
 
   data.pages.nodes &&
     data.pages.nodes.map((page) => {
-      if (!isEmpty(page.uri)) {
+      if (!isEmpty(page.uri) && !isCustomPageUri(page.uri)) {
         const slugs = page.uri.split("/").filter((pageSlug) => pageSlug);
         pathsData.push({ params: { slug: slugs } });
       }

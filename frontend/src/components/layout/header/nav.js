@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useState } from "react";
 
 export default function Nav({ headerMenus, header }) {
-  console.log("NAV", headerMenus);
+  //console.log("NAV", headerMenus);
   if (isEmpty(headerMenus)) {
     return null;
   }
