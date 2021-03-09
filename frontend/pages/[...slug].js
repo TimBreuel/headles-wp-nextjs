@@ -7,6 +7,7 @@ import Layout from "../src/components/layout/index";
 import {
   handleRedirectsAndRerturnData,
   isCustomPageUri,
+  FALLBACK,
 } from "../src/utils/slugs";
 
 const Page = ({ data }) => {
@@ -70,7 +71,7 @@ export const getStaticPaths = async () => {
 
   return {
     paths: pathsData,
-    fallback: true,
+    fallback: FALLBACK,
   };
 };
 /**
