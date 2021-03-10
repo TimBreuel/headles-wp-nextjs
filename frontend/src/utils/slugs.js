@@ -12,14 +12,16 @@ export const handleRedirectsAndRerturnData = (
   defaultProps,
   data,
   errors,
-  field
+  field,
+  isPreview = false,
+  loginRedirectURL = ""
 ) => {
   // console.log("HANDLE404: ", data);
-  if (isEmpty(data)) {
+  if (isPreview && null === data[field]) {
     return {
       redirect: {
-        destination: "/503",
-        statusCode: 301,
+        destination: loginRedirectURL || "/",
+        statusCode: 307,
       },
     };
   }
